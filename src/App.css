@@ -56,9 +56,9 @@
   background: repeating-linear-gradient(
     -45deg,
     #fff,
-    #fff 10px,
-    #4ab6e8 10px,
-    #4ab6e8 25px
+    #fff 8px,
+    #4ab6e8 8px,
+    #4ab6e8 20px
   );
   display: flex;
   align-items: center;
@@ -115,5 +115,77 @@
 }
 
 svg {
-  stroke: black;
+  stroke: var(--color_stroke);
+  stroke-width: 1;
+  overflow: visible;
+}
+
+.arrows {
+  position: absolute;
+  top: 0;
+  left: 40px;
+  display: flex;
+  gap: 20px;
+}
+
+.graph {
+  height: 380px;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.arrow {
+  position: relative;
+}
+
+.arr {
+  position: absolute;
+  right: -4px;
+  stroke: none;
+  fill: var(--color_stroke);
+}
+
+.tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: -13px;
+  background-color: var(--color_stroke);
+  color: var(--color_font_contrast);
+  width: max-content;
+  min-width: 48px;
+  height: 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color_background);
+}
+
+.tag--good {
+  background-color: var(--color_good);
+}
+
+.tag--bad {
+  background-color: var(--color_bad);
+}
+
+.tag svg {
+  stroke: none;
+  margin-right: 3px;
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.button svg {
+  stroke: none;
 }

@@ -5,6 +5,9 @@
   --color_background: #ffffff;
   --color_font: #898290;
   --color_font_contrast: #ffffff;
+  --color_stroke: #898290;
+  --color_good: #00cc99;
+  --color_bad: #fc440f;
 }
 
 :root {
