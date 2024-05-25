@@ -1,0 +1,181 @@
+.bar-graph {
+  padding: 13px 20px 20px;
+  width: max-content;
+  min-width: 550px;
+}
+
+/* HEADER */
+.bar-graph__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+.bar-graph__title {
+  font-size: 16px;
+  font-weight: 500;
+}
+.bar-graph__button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* BODY */
+.bar-graph__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 12px;
+}
+.bar-graph__inner {
+  height: 363px;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+/* ARROWS */
+.bar-graph__arrows {
+  position: absolute;
+  top: 0;
+  left: 40px;
+  display: flex;
+  gap: 20px;
+}
+.bar-graph__arrow {
+  position: relative;
+}
+.bar-graph__line {
+  stroke: var(--color_stroke);
+  stroke-width: 1;
+  overflow: visible;
+}
+.bar-graph__chevron {
+  position: absolute;
+  right: -3.5px;
+  stroke: none;
+  fill: var(--color_stroke);
+  overflow: visible;
+}
+.bar-graph__tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: -13px;
+  background-color: var(--color_stroke);
+  color: var(--color_font_contrast);
+  width: max-content;
+  min-width: 48px;
+  height: 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color_background);
+}
+.bar-graph__tag--good {
+  background-color: var(--color_good);
+}
+.bar-graph__tag--bad {
+  background-color: var(--color_bad);
+}
+.bar-graph__tag svg {
+  margin-right: 3px;
+}
+
+/* COLUMNS */
+.bar-graph__columns {
+  display: flex;
+  align-items: flex-end;
+  gap: 60px;
+}
+.bar-graph__column {
+  width: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.bar-graph__slice {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color_font_contrast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bar-graph__slice:nth-child(1) {
+  background-color: var(--color_metric_01);
+}
+.bar-graph__slice:nth-child(2) {
+  background-color: var(--color_metric_02);
+}
+.bar-graph__slice:nth-child(3) {
+  background-color: var(--color_metric_03);
+}
+.bar-graph__slice--norm {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color_background),
+    var(--color_background) 8px,
+    var(--color_metric_01) 8px,
+    var(--color_metric_01) 20px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bar-graph__slice--norm span {
+  background-color: var(--color_background);
+  color: var(--color_font);
+  display: inline-block;
+  height: 24px;
+  width: 48px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+.bar-graph__label {
+  font-weight: 400;
+  font-size: 10px;
+  text-align: center;
+  margin: 15px 0 0;
+}
+
+/* LEGEND */
+.bar-graph__legend {
+  margin: 40px 0 0;
+  list-style: none;
+  display: flex;
+  gap: 47px;
+  padding: 0;
+}
+.bar-graph__legend li {
+  position: relative;
+  padding-left: 24px;
+}
+.bar-graph__legend li::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 5%;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  border-radius: 3px;
+}
+.bar-graph__legend li:nth-child(1)::before {
+  background-color: var(--color_metric_01);
+}
+.bar-graph__legend li:nth-child(2)::before {
+  background-color: var(--color_metric_02);
+}
+.bar-graph__legend li:nth-child(3)::before {
+  background-color: var(--color_metric_03);
+}
