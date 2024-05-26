@@ -1,14 +1,16 @@
 .bar-graph {
-  padding: 13px 20px 20px;
+  padding: 10px 20px 20px;
   width: max-content;
   min-width: 550px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
 }
 
 /* HEADER */
 .bar-graph__header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 .bar-graph__title {
   font-size: 16px;
@@ -27,10 +29,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 12px;
 }
 .bar-graph__inner {
-  height: 363px;
+  height: 375px;
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -39,7 +40,7 @@
 /* ARROWS */
 .bar-graph__arrows {
   position: absolute;
-  top: 0;
+  bottom: 27px;
   left: 40px;
   display: flex;
   gap: 20px;
@@ -77,6 +78,8 @@
   align-items: center;
   justify-content: center;
   border: 2px solid var(--color_background);
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 .bar-graph__tag--good {
   background-color: var(--color_good);
@@ -127,19 +130,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 40px;
 }
 .bar-graph__slice--norm span {
   background-color: var(--color_background);
   color: var(--color_font);
   display: inline-block;
   height: 24px;
-  width: 48px;
+  min-width: 48px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 14px;
+  box-sizing: border-box;
+  padding: 0 10px;
 }
 .bar-graph__label {
   font-weight: 400;

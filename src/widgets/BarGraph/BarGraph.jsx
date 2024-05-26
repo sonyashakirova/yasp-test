@@ -6,24 +6,50 @@ import Chevron from "../../assets/Chevron.svg?react";
 import Ellipsis from "../../assets/Ellipsis.svg?react";
 import "./BarGraph.css";
 
+const sliceMinHeight = 4; // Минимальная высота слоя (показать, что данные вообще есть)
+const barMaxHeight = 280; // Максимальная высота столбца
+const referenceBarMaxHeight = 240; // Максимальная высота столбца "норматив"
+const heightWithArrows = 327; // Высота всех столбцов вместе со стрелочками
+
 export const BarGraph = ({ title, components, instances, reference }) => {
+  /** Соотношение value-px в зависимости от самого высокого столбца */
+  const ratio = useMemo(() => {
+    const values = instances.map(({ data }) =>
+      components.reduce((acc2, { key }) => acc2 + data[key], 0)
+    );
+    const max = Math.max(...values, reference.value);
+
+    if (max === 0) return 1;
+    if (max === reference.value) return referenceBarMaxHeight / max;
+    else return barMaxHeight / max;
+  }, [components, instances, reference]);
+
+  /** Ширина, высота и значение сравнительных стрелочек */
   const arrowsData = useMemo(
     () =>
       instances.slice(0, -1).map(({ data }, index) => {
-        const comparingData = instances[index + 1].data;
+        const valuesA = Object.values(data);
+        const valuesB = Object.values(instances[index + 1].data);
 
-        const totalA = Object.values(data).reduce((acc, v) => acc + v);
-        const totalB = Object.values(comparingData).reduce((acc, v) => acc + v);
-
-        const heightA = 326 - totalA * 1.4;
-        const heightB = 326 - totalB * 1.4;
-
-        const width = index === 0 || index === instances.length - 2 ? 130 : 120;
+        const totalA = valuesA.reduce((acc, v) => acc + v);
+        const totalB = valuesB.reduce((acc, v) => acc + v);
         const difference = totalB - totalA;
 
-        return { width, heightA, heightB, difference };
+        const width = index === 0 || index === instances.length - 2 ? 130 : 120;
+        const yA =
+          heightWithArrows -
+          valuesA.reduce((acc, v) => {
+            return acc + Math.max(sliceMinHeight, v * ratio);
+          }, 0);
+        const yB =
+          heightWithArrows -
+          valuesB.reduce((acc, v) => {
+            return acc + Math.max(sliceMinHeight, v * ratio);
+          }, 0);
+
+        return { width, yA, yB, difference };
       }),
-    [instances]
+    [ratio, instances]
   );
 
   const Header = () => (
@@ -41,18 +67,15 @@ export const BarGraph = ({ title, components, instances, reference }) => {
 
   const Arrows = () => (
     <div className="bar-graph__arrows">
-      {arrowsData.map(({ width, heightA, heightB, difference }, index) => {
+      {arrowsData.map(({ width, yA, yB, difference }, index) => {
         return (
           <div className="bar-graph__arrow" key={index}>
             <svg width={width} height="330" className="bar-graph__line">
-              <line x1="0" y1="0" x2="0" y2={heightA} />
+              <line x1="0" y1="0" x2="0" y2={yA} />
               <line x1="0" y1="0" x2="100%" y2="0" />
-              <line x1="100%" y1="0" x2="100%" y2={heightB} />
+              <line x1="100%" y1="0" x2="100%" y2={yB} />
             </svg>
-            <Chevron
-              className="bar-graph__chevron"
-              style={{ top: heightB - 3 }}
-            />
+            <Chevron className="bar-graph__chevron" style={{ top: yB - 3 }} />
             <span
               className={`bar-graph__tag
                   ${difference > 0 && "bar-graph__tag--good"}
@@ -73,13 +96,19 @@ export const BarGraph = ({ title, components, instances, reference }) => {
       <div className="bar-graph__column">
         {components.map((component, index) => {
           const value = instance.data[component.key];
+          const height = value * ratio;
           return (
             <div
               key={index}
               className="bar-graph__slice"
-              style={{ height: value * 1.4 }}
+              style={{
+                height:
+                  height > 0 && height < sliceMinHeight
+                    ? sliceMinHeight
+                    : height,
+              }}
             >
-              {value}
+              {height < 16 ? "" : value}
             </div>
           );
         })}
@@ -94,7 +123,7 @@ export const BarGraph = ({ title, components, instances, reference }) => {
         <div className="bar-graph__column">
           <div
             className="bar-graph__slice bar-graph__slice--norm"
-            style={{ height: reference.value * 1.3 }}
+            style={{ height: reference.value * ratio }}
           >
             <span>{reference.value}</span>
           </div>
